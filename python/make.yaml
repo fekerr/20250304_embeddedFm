@@ -1,0 +1,39 @@
+# make.py configuration file
+
+# Defines tasks that make.py can execute.
+# Each task can have a description and a sequence of commands or function calls.
+
+tasks:
+  dump_binary:
+    description: "Dumps the binary file specified in config.toml to stdout."
+    actions:
+      - type: "script_call"
+        script: "dumpit.py"
+        # Arguments can be passed here if needed, or dumpit.py can read config directly.
+        # args:
+        #   input_file_config_key: "paths.binary_file" # Key in config.toml
+        #   output_file_config_key: "paths.dump_output_file" # Key in config.toml
+        #   bytes_per_line_config_key: "dump_settings.bytes_per_line" # Key in config.toml
+
+  lint:
+    description: "Lints the Python code using pylint."
+    actions:
+      - type: "shell_command"
+        command: "pylint *.py" # Adjust glob pattern as needed
+
+  format:
+    description: "Formats the Python code using black."
+    actions:
+      - type: "shell_command"
+        command: "black ." # Adjust path as needed
+
+  # Example of a task that runs multiple other tasks
+  # check:
+  #   description: "Runs linting and formatting."
+  #   dependencies:
+  #     - "lint"
+  #     - "format"
+
+# Global settings or variables for make.py can be defined here
+# settings:
+#   default_task: "dump_binary"

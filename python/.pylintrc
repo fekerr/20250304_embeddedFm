@@ -1,0 +1,12 @@
+# Pylint configuration file
+
+[MAIN]
+# Maximum number of characters on a single line.
+max-line-length=120
+
+[MESSAGES CONTROL]
+# Disable specific messages if needed, for example:
+# disable=missing-docstring, C0103
+
+# You can also enable specific messages if they are disabled by default
+# enable=RP0001 # (example, not a real message ID)

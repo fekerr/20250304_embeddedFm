@@ -1,0 +1,9 @@
+# Linters and Formatters
+pylint
+black
+
+# Configuration management (if needed, e.g. for toml)
+toml
+PyYAML
+
+# Add other core dependencies here as they are identified

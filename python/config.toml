@@ -1,0 +1,18 @@
+# Configuration for the Python project
+
+[paths]
+# Path to the binary file to be dumped
+# The path is relative to the python/ directory where dumpit.py will likely run.
+binary_file = "../forth46bytes.bin"
+
+# Output path for the hexdump, relative to the python directory
+# dump_output_file = "dump_output.txt"
+
+[dump_settings]
+# Number of bytes per line in the hex dump
+bytes_per_line = 16
+
+# Other settings can be added here, e.g.,
+# include_ascii_representation = true
+# endianness = "little" # or "big"
+# offset_radix = "hex" # or "dec"

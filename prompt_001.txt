@@ -1,0 +1,15 @@
+"I am exploring a very minimal operating system called 10biForthOS, written by [Philippe Brochard] for the Intel 8086 processor. The source code is provided as a sequence of 46 bytes representing 8086 opcodes. The sources describe it as a Forth implementation with only two core instructions: compile (1) and execute (0), capable of receiving commands over serial or keyboard to load more software. The sources also mention it lacks typical Forth features like stacks, dictionaries, and word definition, but has outer and inner interpreters and the 'Forth feeling'.
+
+The 46 bytes are given as:
+`50b8 8e00 31d8 e8ff 0017 003c 0575 00ea`
+`5000 3c00 7401 eb02 e8ee 0005 0588 eb47`
+`b8e6 0200 d231 14cd e480 7580 c3f4`
+
+Please perform the following tasks to help me understand this code:
+
+1.  **Disassemble** this 46-byte sequence into equivalent Intel 8086 assembly language instructions. Provide the byte offset, the bytes themselves, and the corresponding assembly mnemonic and operands for each instruction.
+2.  **Explain** what each assembly instruction (or logical groups of instructions) is likely doing. Connect this analysis back to the description of the OS from the sources where possible (e.g., identifying parts related to input handling, the interpreter loop, compile/execute logic, initialization).
+3.  Given the minimalism and the byte sequence, offer insights into the likely execution flow and how such a minimal program could achieve the described functionality (receiving input, having basic compile/execute operations).
+4.  *(Optional but helpful)* Discuss approaches or considerations for simulating or emulating this 8086 code to see it run.
+
+My goal is to understand the low-level implementation of this extremely small Forth-like OS based on the provided raw opcodes and the functional description from the sources."
