@@ -1,12 +1,15 @@
-# Linters and Formatters
-pylint
-black
-
-# Configuration management (if needed, e.g. for toml)
-toml
-PyYAML
-
-# Disassembly tools
-capstone
-
-# Add other core dependencies here as they are identified
+astroid==3.3.10
+black==25.1.0
+capstone==5.0.6
+click==8.2.1
+dill==0.4.0
+isort==6.0.1
+mccabe==0.7.0
+mypy_extensions==1.1.0
+packaging==25.0
+pathspec==0.12.1
+platformdirs==4.3.8
+pylint==3.3.7
+PyYAML==6.0.2
+toml==0.10.2
+tomlkit==0.13.2
