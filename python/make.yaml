@@ -19,7 +19,7 @@ tasks:
     description: "Lints the Python code using pylint."
     actions:
       - type: "shell_command"
-        command: "pylint *.py" # Adjust glob pattern as needed
+        command: "pylint --fail-under=9.5 *.py" # Adjust glob pattern as needed
 
   format:
     description: "Formats the Python code using black."
