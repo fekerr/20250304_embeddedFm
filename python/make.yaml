@@ -21,6 +21,12 @@ tasks:
       - type: "script_call"
         script: "disassemble_capstone.py"
 
+  disassemble_objdump:
+    description: "Disassembles forth46bytes.bin using objdump and saves to forth46bytes_objdump.asm."
+    actions:
+      - type: "shell_command"
+        command: "objdump -D -b binary -m i8086 ../forth46bytes.bin > forth46bytes_objdump.asm"
+
   lint:
     description: "Lints the Python code using pylint."
     actions:
