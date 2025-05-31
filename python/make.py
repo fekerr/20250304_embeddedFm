@@ -85,47 +85,41 @@ def execute_script_call(
     # script_args currently unused, placeholder for future script argument passing
     # main_config currently unused, placeholder for future script needs if scripts need main config access
     print(f"[{task_name}] Calling script: {script_name}")
-    if script_name == "dumpit.py":
-        try:
-            # This is a direct call, assuming dumpit.py is in the same directory
-            # and handles its own config loading.
-            process = subprocess.run(
-                [sys.executable, script_name],  # Use sys.executable for portability
-                check=True,
-                text=True,
-                capture_output=True,
-            )
-            if process.stdout:
-                print(process.stdout.strip())
-            if process.stderr:
-                print(process.stderr.strip(), file=sys.stderr)
-            print(f"[{task_name}] Script '{script_name}' completed successfully.")
-            return True
-        except subprocess.CalledProcessError as e:
-            print(
-                f"Error executing script '{script_name}' for task '{task_name}': {e}",
-                file=sys.stderr,
-            )
-            if e.stdout:
-                print(e.stdout.strip(), file=sys.stderr)
-            if e.stderr:
-                print(e.stderr.strip(), file=sys.stderr)
-            return False
-        except FileNotFoundError:
-            print(
-                f"Error: Script '{script_name}' not found for task '{task_name}'.",
-                file=sys.stderr,
-            )
-            return False
-        except Exception as e:  # General fallback for other unexpected errors
-            print(
-                f"An unexpected error occurred running script '{script_name}' for '{task_name}': {e}",
-                file=sys.stderr,
-            )
-            return False
-    else:
+    try:
+        # This is a direct call, assuming the script is in the same directory
+        # and handles its own config loading if necessary.
+        # For future: Pass script_args and main_config to the script if a convention is established.
+        process = subprocess.run(
+            [sys.executable, script_name],  # Use sys.executable for portability
+            check=True,
+            text=True,
+            capture_output=True,
+        )
+        if process.stdout:
+            print(process.stdout.strip())
+        if process.stderr:
+            print(process.stderr.strip(), file=sys.stderr)
+        print(f"[{task_name}] Script '{script_name}' completed successfully.")
+        return True
+    except subprocess.CalledProcessError as e:
         print(
-            f"Error: Script '{script_name}' is not supported by this make.py version.",
+            f"Error executing script '{script_name}' for task '{task_name}': {e}",
+            file=sys.stderr,
+        )
+        if e.stdout:
+            print(e.stdout.strip(), file=sys.stderr)
+        if e.stderr:
+            print(e.stderr.strip(), file=sys.stderr)
+        return False
+    except FileNotFoundError:
+        print(
+            f"Error: Script '{script_name}' not found for task '{task_name}'.",
+            file=sys.stderr,
+        )
+        return False
+    except Exception as e:  # General fallback for other unexpected errors
+        print(
+            f"An unexpected error occurred running script '{script_name}' for '{task_name}': {e}",
             file=sys.stderr,
         )
         return False

@@ -6,4 +6,7 @@ black
 toml
 PyYAML
 
+# Disassembly tools
+capstone
+
 # Add other core dependencies here as they are identified

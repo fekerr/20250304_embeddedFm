@@ -15,6 +15,12 @@ tasks:
         #   output_file_config_key: "paths.dump_output_file" # Key in config.toml
         #   bytes_per_line_config_key: "dump_settings.bytes_per_line" # Key in config.toml
 
+  disassemble_capstone:
+    description: "Disassembles forth46bytes.bin using Capstone and saves to forth46bytes_capstone.asm."
+    actions:
+      - type: "script_call"
+        script: "disassemble_capstone.py"
+
   lint:
     description: "Lints the Python code using pylint."
     actions:
