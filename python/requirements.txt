@@ -13,3 +13,6 @@ pylint==3.3.7
 PyYAML==6.0.2
 toml==0.10.2
 tomlkit==0.13.2
+
+# Emulation tools
+unicorn

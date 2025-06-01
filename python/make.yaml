@@ -27,6 +27,12 @@ tasks:
       - type: "shell_command"
         command: "objdump -D -b binary -m i8086 ../forth46bytes.bin > forth46bytes_objdump.asm"
 
+  execute_unicorn:
+    description: "Executes forth46bytes.bin using Unicorn emulator."
+    actions:
+      - type: "script_call"
+        script: "execute_unicorn_8086.py"
+
   lint:
     description: "Lints the Python code using pylint."
     actions:
