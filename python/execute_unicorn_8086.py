@@ -12,7 +12,7 @@ from unicorn.x86_const import *
 # Configuration
 DEFAULT_CONFIG_PATH = "config.toml" # Relative to this script's location (python/)
 # Fallback binary path if config fails or key is missing
-DEFAULT_FORTH_BINARY_PATH = "../forth46bytes.bin" 
+DEFAULT_FORTH_BINARY_PATH = "../forth46bytes.bin"
 
 # Memory setup for 10biForthOS
 # According to typical .com file loading and common practice for small OSes.
@@ -27,7 +27,7 @@ MEMORY_SIZE = 2 * 1024 * 1024  # 2MB, ample space
 # We will initialize SS = CS and SP = 0xFFFE (top of 64k segment, word aligned)
 INITIAL_CS = CODE_LOAD_ADDRESS // 0x10
 INITIAL_IP = CODE_LOAD_ADDRESS % 0x10 # Should be 0x0000 for .com files
-INITIAL_SS = INITIAL_CS 
+INITIAL_SS = INITIAL_CS
 INITIAL_SP = 0xFFFE
 
 # Buffer for simulated serial input
@@ -53,7 +53,7 @@ def hook_code(uc, address, size, user_data):
     """
     cs = uc.reg_read(UC_X86_REG_CS)
     ip = uc.reg_read(UC_X86_REG_IP) # This is IP at the *start* of the instruction
-    
+
     # The 'address' param is the linear address of the current instruction.
     print(f"TRACE: CS:0x{cs:04x} IP:0x{ip:04x} (Linear: 0x{address:05x}) Size: {size}")
 
@@ -98,7 +98,7 @@ def hook_intr(uc, intno, user_data):
             al = uc.reg_read(UC_X86_REG_AL)
             char_to_print = chr(al)
             # Print to console, simulating teletype
-            # sys.stdout.write(char_to_print) 
+            # sys.stdout.write(char_to_print)
             # sys.stdout.flush()
             print(f"[INT 0x10:AH=0E] Teletype: '{char_to_print}' (char code: {al:#02x})")
         else:
@@ -130,15 +130,15 @@ def emulate_code(code_bytes, binary_file_path):
         mu.reg_write(UC_X86_REG_IP, INITIAL_IP)
         mu.reg_write(UC_X86_REG_SS, INITIAL_SS)
         mu.reg_write(UC_X86_REG_SP, INITIAL_SP)
-        
+
         # DS will be set by the OS to 0x07E0 for data. Initialize to CS for now.
-        mu.reg_write(UC_X86_REG_DS, INITIAL_CS) 
+        mu.reg_write(UC_X86_REG_DS, INITIAL_CS)
         mu.reg_write(UC_X86_REG_ES, 0x0000) # Often 0 or set by program
 
         for reg in [UC_X86_REG_AX, UC_X86_REG_BX, UC_X86_REG_CX, UC_X86_REG_DX,
                     UC_X86_REG_SI, UC_X86_REG_DI, UC_X86_REG_BP]:
             mu.reg_write(reg, 0x0000)
-        
+
         print(f"Initial Registers: CS=0x{mu.reg_read(UC_X86_REG_CS):04x} IP=0x{mu.reg_read(UC_X86_REG_IP):04x} "
               f"SS=0x{mu.reg_read(UC_X86_REG_SS):04x} SP=0x{mu.reg_read(UC_X86_REG_SP):04x} "
               f"DS=0x{mu.reg_read(UC_X86_REG_DS):04x} ES=0x{mu.reg_read(UC_X86_REG_ES):04x}")
@@ -147,13 +147,13 @@ def emulate_code(code_bytes, binary_file_path):
         mu.hook_add(UC_HOOK_INTR, hook_intr)
 
         CODE_START_LINEAR = (INITIAL_CS * 0x10) + INITIAL_IP
-        EMULATION_END_ADDRESS = MEMORY_BASE + MEMORY_SIZE 
+        EMULATION_END_ADDRESS = MEMORY_BASE + MEMORY_SIZE
         INSTRUCTION_COUNT_LIMIT = 500 # Increased instruction count
 
         print(f"\nStarting emulation from CS:IP 0x{INITIAL_CS:04x}:0x{INITIAL_IP:04x} "
               f"(Linear: 0x{CODE_START_LINEAR:05x})")
         print(f"Max instructions: {INSTRUCTION_COUNT_LIMIT if INSTRUCTION_COUNT_LIMIT > 0 else 'unlimited (relies on HLT/error)'}")
-        
+
         # Pre-fill serial buffer for testing
         # Example: 1 (compile mode), B8 0100 (MOV AX, 0001), F4 (HLT), 0 (execute mode)
         global SERIAL_INPUT_BUFFER
@@ -188,7 +188,7 @@ def emulate_code(code_bytes, binary_file_path):
                 "AX": UC_X86_REG_AX, "BX": UC_X86_REG_BX,
                 "CX": UC_X86_REG_CX, "DX": UC_X86_REG_DX,
                 "SI": UC_X86_REG_SI, "DI": UC_X86_REG_DI,
-                "BP": UC_X86_REG_BP, 
+                "BP": UC_X86_REG_BP,
                 "DS": UC_X86_REG_DS, "ES": UC_X86_REG_ES,
                 "FLAGS": UC_X86_REG_EFLAGS
             }
@@ -203,7 +203,7 @@ def emulate_code(code_bytes, binary_file_path):
 if __name__ == "__main__":
     config = load_app_config()
     binary_file_config_path = config.get("paths", {}).get("binary_file", DEFAULT_FORTH_BINARY_PATH)
-    
+
     # Determine script's directory to correctly resolve relative paths
     script_dir = os.path.dirname(__file__) if "__file__" in locals() else "."
     # Path in config.toml is relative to python/ dir. If script is in python/, this works.
